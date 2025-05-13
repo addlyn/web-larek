@@ -1,5 +1,6 @@
 export type CardId = string; //uuid?
 
+
 export type EventName = string | RegExp;
 export type Subscriber = Function;
 export type EmitterEvent = {
@@ -11,14 +12,15 @@ export interface IEvents {
     on<T extends object>(event: EventName, callback: (data: T) => void): void;
     emit<T extends object>(event: string, data?: T): void;
     trigger<T extends object>(event: string, context?: Partial<T>): (data: T) => void;
-}
+  }
 
 export type ApiListResponse<Type> = {
-    total: number,
-    items: Type[]
+  total: number,
+  items: Type[]
 };
 
 export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
+
 
 export interface ILarekApi {
     getCardsList: () => Promise<ICard[]>;
@@ -27,11 +29,13 @@ export interface ILarekApi {
   }
   
 export interface IAppStatus {
-    basket: string[],
-    cards: ICard[],
-    order: IOrder,
-    preview: string | null,
-}
+    catalog: ICard[];
+    basket: ICard[];
+    preview: string | null;
+    delivery: IOrdersDelivery | null;
+    contact: IOrdersContacts | null;
+    order: IOrder | null;
+  }
 
 
 export type Payment = 'online' | 'cash' | '';
@@ -43,12 +47,14 @@ export interface IPage {
 }
 
 export interface ICard {
-    id: CardId,
+    id: string,
     description: string,
     image: string,
     title: string,
     category: string,
     price: number | null,
+    count?: string,
+    buttonText? : string;
 }
 
 export interface IOrdersDelivery {

@@ -1,4 +1,4 @@
-import { EventName, Subscriber, EmitterEvent, IEvents} from '../../types/index';
+import { EventName, Subscriber, EmitterEvent, IEvents } from "../../types";
 
 export class EventEmitter implements IEvents {
     _events: Map<EventName, Set<Subscriber>>;
@@ -13,7 +13,7 @@ export class EventEmitter implements IEvents {
         }
         this._events.get(eventName)?.add(callback);
     }
-  
+
     off(eventName: EventName, callback: Subscriber) {
         if (this._events.has(eventName)) {
             this._events.get(eventName)!.delete(callback);
