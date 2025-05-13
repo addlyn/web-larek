@@ -1,4 +1,4 @@
-type CardId = string; //
+export type CardId = string; //uuid?
 
 export type EventName = string | RegExp;
 export type Subscriber = Function;
@@ -20,6 +20,27 @@ export type ApiListResponse<Type> = {
 
 export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 
+export interface ILarekApi {
+    getCardsList: () => Promise<ICard[]>;
+    getCard: (id: string) => Promise<ICard>;
+    orderProducts: (order: IOrder) => Promise<IOrderSuccess>
+  }
+  
+export interface IAppStatus {
+    basket: string[],
+    cards: ICard[],
+    order: IOrder,
+    preview: string | null,
+}
+
+
+export type Payment = 'online' | 'cash' | '';
+
+export interface IPage {
+    counter: number;
+    catalog: HTMLElement[];
+    locked: boolean;
+}
 
 export interface ICard {
     id: CardId,
@@ -30,17 +51,23 @@ export interface ICard {
     price: number | null,
 }
 
-export interface IOrder {
+export interface IOrdersDelivery {
     payment: string,
+    address: string,
+}
+
+export interface IOrdersContacts {
     email: string,
     phone: string,
-    address: string,
+}
+
+export interface IOrder extends IOrdersDelivery, IOrdersContacts {
     total: number | null,
     items: CardId[],
 }
 
 export interface IOrderSuccess {
-    id: string,
+    id: string, 
     total: number | null,
 }
 
@@ -57,3 +84,11 @@ export interface IBasket {
 }
 
 export type FormErrors = Partial<Record<keyof IOrder, string>>;
+
+export interface IActions {
+    onClick: (event: MouseEvent) => void;
+}
+
+export interface ISuccessActions {
+    onClick: () => void;
+}
